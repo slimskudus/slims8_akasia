@@ -50,7 +50,6 @@ if (!$confirmation) {
 
 // start the output buffering for main content
 ob_start();
-
 define('INSTITUTION_EMPTY', 11);
 define('ALREADY_CHECKIN', 12);
 
@@ -158,14 +157,14 @@ if (isset($_POST['counter'])) {
   $memberID = trim($_POST['memberID']);
   $counter = setCounter($memberID);
   if ($counter === true) {
-    echo __($member_name.', thank you for inserting your data to our visitor log').'<div id="memberImage" data-img="./images/persons/'.urlencode($photo).'"></div>';
+    echo __($member_name.', thank you for inserting your data to our visitor log').'';
     if ($expire) {
       echo '<div class="error visitor-error">'.__('Your membership already EXPIRED, please renew/extend your membership immediately').'</div>';
     }
   } else if ($counter === ALREADY_CHECKIN) {
     echo __('Welcome back').' '.$member_name.'.';
   } else if ($counter === INSTITUTION_EMPTY) {
-    echo __('Sorry, Please fill institution field if you are not library member');
+    echo __('Hai Sorry ? Please fill institution field if you are not library member ?');
   } else {
     echo __('Error inserting counter data to database!');
   }
@@ -176,6 +175,7 @@ if (isset($_POST['counter'])) {
 require SB.$sysconf['template']['dir'].'/'.$sysconf['template']['theme'].'/visitor_template.php';
 
 ?>
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
 <script type="text/javascript">
 $(document).ready( function() {
   // give focus to first field
@@ -193,11 +193,12 @@ $(document).ready( function() {
     var theForm     = $(this);
     var formAction  = theForm.attr('action');
     var formData    = theForm.serialize();
+    
     formData       += '&counter=true';
     // block the form
     theForm.disableForm();
     $('#counterInfo').html('Please Wait ...');
-    // create AJAX request for submitting form
+        // create AJAX request for submitting form
     $.ajax({ url: formAction,
           type: 'POST',
           async: false,
@@ -206,16 +207,22 @@ $(document).ready( function() {
           success: function(respond) {
             $('#counterInfo').html(respond);
             // reset counter
+            // "Indonesian Male" Ganti Nama negara dan Male / Female
+            // Pith untuk kecepatan bicara makin bear makin lambat
+            // Rate untuk kecepata putar suara
+            responsiveVoice.speak(respond, "Indonesian Male", {rate: 0.9, pitch:1});
             setTimeout(function() { 
               $('#visitorCounterPhoto').attr('src', './images/persons/photo.png');
               $('#counterInfo').html(defaultMsg); 
               visitorCounterForm.enableForm().find('input[type=text]').val('');
               $('#memberID').focus();
+
             }, 5000);
           },
           complete: function() {
             $(this).enableForm().find('input[type=text]').val('');
             var memberImage = $('#memberImage');
+            
             if (memberImage) {
               // update visitor photo
               var imageSRC = memberImage.data("img");

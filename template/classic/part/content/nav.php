@@ -30,6 +30,10 @@ $menus = array (
       'text' => __('Home')
       ),
     'libinfo'  => array(
+      'url'  => 'index.php?p=visitor',
+      'text' => __('Buku Tamu')
+      ),
+    'libinfo'  => array(
       'url'  => 'index.php?p=libinfo',
       'text' => __('Library Information')
       ),

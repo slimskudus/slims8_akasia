@@ -40,8 +40,8 @@ function loadPrintSettings($dbs, $type) {
   }
 }
 
-// label print settings
-/* measurement in cm */
+
+// label barcode karya kak Heru Subekti terbaru print settings
 $sysconf['print']['label']['page_margin'] = 0.2;
 $sysconf['print']['label']['items_per_row'] = 3;
 $sysconf['print']['label']['items_margin'] = 0.05;
@@ -52,6 +52,11 @@ $sysconf['print']['label']['header_text'] = ''; // keep empty if you want to use
 $sysconf['print']['label']['fonts'] = "Arial, Verdana, Helvetica, 'Trebuchet MS'";
 $sysconf['print']['label']['font_size'] = 11;
 $sysconf['print']['label']['border_size'] = 1; // in pixels
+
+// label barcode karya kak Heru Subekti terbaru print settings
+$sysconf['print']['barcode']['barcode_coll_size'] = 1; // in cm
+$sysconf['print']['barcode']['barcode_position'] = 'l'; // left or right
+$sysconf['print']['barcode']['barcode_rotate'] = 'cc'; // cc or cw
 
 // item barcode print settings
 /* measurement in cm */

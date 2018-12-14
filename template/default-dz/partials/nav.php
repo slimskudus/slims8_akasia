@@ -1,28 +1,112 @@
-<nav class="s-menu-content animated-fast" role="navigation">
-  <a href="#" id="hide-menu" class="s-menu-toggle"><span></span></a>
-  <h1>Menu</h1>
-  <ul>
-    <li><a href="index.php"><?php echo __('Home'); ?></a></li>
-    <li><a href="index.php?p=news"><?php echo __('Library News'); ?></a></li>
-    <li><a href="index.php?p=libinfo"><?php echo __('Library Information'); ?></a></li>
-    <li><a href="index.php?p=peta" class="openPopUp" width="600" height="400"><?php echo __('Library Location'); ?></a></li>
-    <li><a href="index.php?p=member"><?php echo __('Member Area'); ?></a></li>
-    <li><a href="index.php?p=librarian"><?php echo __('Librarian'); ?></a></li>
-    <li><a href="index.php?p=help"><?php echo __('Help on Search'); ?></a></li>
-    <li><a href="index.php?p=login"><?php echo __('Librarian LOGIN'); ?></a></li>
-    <li><a href="index.php?p=slimsinfo"><?php echo __('About SLiMS'); ?></a></li>
-  </ul>
+<?php
+/**
+ * @Author: ido_alit
+ * @Date:   2015-11-12 19:55:37
+ * @Last Modified by:   ido_alit
+ * @Last Modified time: 2015-11-24 10:40:47
+ */
 
-  <!-- Language Translator
-  ============================================= -->
-  <div class="s-menu-info">
-    <form class="language" name="langSelect" action="index.php" method="get">
-      <label class="language-info" for="select_lang"><?php echo __('Select Language'); ?></label>
-      <span class="custom-dropdown custom-dropdown--emerald custom-dropdown--small">
-        <select name="select_lang" id="select_lang" title="Change language of this site" onchange="document.langSelect.submit();" class="custom-dropdown__select custom-dropdown__select--emerald">
-          <?php echo $language_select; ?>
-        </select>
-      </span>
-    </form>
-  </div>
+//set default index page
+$p = 'home';
+
+if (isset($_GET['p']))
+{
+ if ($_GET['p'] == 'libinfo') {
+  $p = 'libinfo';
+} elseif ($_GET['p'] == 'help') {
+  $p = 'help';
+} elseif ($_GET['p'] == 'member') {
+  $p = 'member';
+} elseif ($_GET['p'] == 'login') {
+  $p = 'login';
+} else {
+  $p = strtolower(trim($_GET['p']));
+}
+}
+
+$menus = array (
+    'home'   => array(
+      'url'  => 'index.php',
+      'text' => __('Home')
+      ),
+    'libinfo'  => array(
+      'url'  => 'index.php?p=visitor',
+      'text' => __('Buku Tamu')
+      ),
+    'libinfo'  => array(
+      'url'  => 'index.php?p=libinfo',
+      'text' => __('Library Information')
+      ),
+    'member'   => array(
+      'url'  => 'index.php?p=member',
+      'text' => __('Member Area')
+      ),
+    'librarian'   => array(
+      'url'  => 'index.php?p=librarian',
+      'text' => __('Librarian')
+      ),
+    'help'   => array(
+      'url'  => 'index.php?p=help',
+      'text' => __('Help on Search'),
+      'dropdown' => array()
+      ),
+    'more'   => array(
+      'url'  => '#',
+      'text' => __('More'),
+
+      'dropdown' => array(
+        'news' => array(
+          'url'   => 'index.php?p=news',
+          'text'  => __('News')
+          ),
+        'login' => array(
+          'url'   => 'index.php?p=login',
+          'text'  => __('Librarian LOGIN')
+          ),
+        'link3' => array(
+          'url'   => '#',
+          'text'  => 'Link'
+          ),
+        'link4' => array(
+          'url'   => '#',
+          'text'  => 'Link'
+          )
+        )
+      )
+    );
+
+?>
+
+<nav class="slims-row slims-menus">
+	<ul>
+
+  <?php
+  $d = '';
+  foreach ($menus as $path => $menu) {
+    if (isset($menu['dropdown']) && !empty($menu['dropdown'])) {
+      $d .= '<li class="dropdown">';
+      $d .= '<a class="slims-button slims-button--default dropdown-toggle" id="m-'.$path.'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">';
+      $d .= $menu['text'];
+      $d .= '<span class="caret"></span>';
+      $d .= '</a>';
+      $d .= '<ul class="dropdown-menu slims-dropdown" aria-labelledby="m-'.$path.'">';
+      foreach ($menu['dropdown'] as $path2 => $menu2) {
+        $d .= '<li><a href="'.$menu2['url'].'">'.$menu2['text'].'</a></li>';
+      }
+      $d .= '</ul>';
+    } else {
+      $d .= '<li>';
+      if ($p == $path) {
+        $c = 'slims-button--blue';
+      } else {
+        $c = 'slims-button--default';
+      }
+      $d .= '<a href="'.$menu['url'].'" class="slims-button '.$c.'">'.$menu['text'].'</a>';
+      $d .= '</li>';
+    }
+  }
+  echo $d;
+  ?>
+
+  </ul>
 </nav>
