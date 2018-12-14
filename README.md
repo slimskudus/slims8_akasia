@@ -9,6 +9,10 @@ Fitur Wow yang ditambahkan
 * :heart_eyes: Visitor dengan Suara , Wow suara bisa diganti ganti sesuai logat negara lain
 * :heart_eyes: Penambahan menu pada navigasi template ke visitor , wow 
 
+Yuk join grup telegram kita di 
+
+[http://t.me/slimskudus](http://t.me/slimskudus)
+
 Based : SLiMS 8 Akasia 8.4.x
 ===============
 SENAYAN Library Management System (SLiMS) version 8 Codename Akasia
